@@ -62,30 +62,10 @@ private:
         return ansHead;
     }
 private:
-ListNode* reverse(ListNode* l1)
-{
-    ListNode* curr=l1;
-    ListNode* prev=NULL;
-    ListNode* temp=NULL;
-    while(curr != NULL)
-    {
-        temp=curr->next;
-        curr->next=prev;
-        prev=curr;
-        curr=temp;
-    } 
-    return prev;
-}
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        //reverse given LL
-    //    ListNode* head1= reverse(l1);
-    //    ListNode* head2= reverse(l2);
-       // sum two LL
        ListNode* ans=add(l1,l2);
-       //reverse the added LL
-    //    return reverse(ans);
-    return ans;
+        return ans;
 
         
     }
