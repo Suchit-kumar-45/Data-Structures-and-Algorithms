@@ -16,7 +16,7 @@ public:
         if(!root->left && !root->right)
         {
             arr.push_back(s);
-            return arr;
+            //return arr;
         }
         if(root->left)
             solve(root->left,s+char(root->left->val+'0'),arr);
