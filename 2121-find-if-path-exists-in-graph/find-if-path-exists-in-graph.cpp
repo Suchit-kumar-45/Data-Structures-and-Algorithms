@@ -1,31 +1,25 @@
 class Solution {
 public:
-    bool bfs(int src, int dest, unordered_map<int,list<int>>& adj)
+    bool helper(int src,int dest,unordered_map<int,list<int>>&adj,vector<bool>&vis)
     {
-        unordered_map<int,bool>visited;
-        queue<int>q;
-        q.push(src);
-        visited[src]=true;
-        while(!q.empty())
+        if(src==dest)
         {
-            int front=q.front();
-            q.pop();
-
-            for(auto i:adj[front])
+            return true;
+        }
+        vis[src]=true;
+        
+        for(auto i:adj[src])
+        {
+                
+            if(!vis[i])
             {
-                if(i==dest)
+                if(helper(i,dest,adj,vis))
                 {
                     return true;
                 }
-                if(!visited[i])
-                {
-                    q.push(i);
-                    visited[i]=true;
-                }
-                
             }
-
         }
+        
         return false;
     }
     bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
@@ -37,11 +31,9 @@ public:
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-        if(n==1)
-        {
-            return true;
-        }
-        return bfs(source,destination,adj);
+        vector<bool>vis(n,false);
+        return helper(source,destination,adj,vis);
+        
         
     }
 };
