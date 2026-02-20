@@ -1,36 +1,29 @@
 class Solution {
 public:
-    //using Binary Search and
-    int solve(string text1, string text2)
+    int solve(int i, int j, string &text1, string &text2,vector<vector<int>>&dp)
     {
-        int n1=text1.size();
-        int n2=text2.size();
-        vector<int>curr(n2+1,0);
-        vector<int>next(n2+1,0);
-        
-        for(int index1=n1-1;index1>=0;index1--)
+        int ans=0;
+        if(i>=text1.size() || j>=text2.size())
         {
-            for(int index2=n2-1;index2>=0;index2--)
-            {
-                int incl=0;
-                if(text1[index1]==text2[index2])
-                {
-                     incl=1+next[index2+1];
-                }
-                int excl1=0+next[index2];
-                int excl2=0+curr[index2+1];
-                curr[index2]= max({incl,excl1,excl2});
-            }
-            next=curr;
+            return 0;
         }
-        
-        
-        
-        return next[0];
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
+        if(text1[i]==text2[j])
+        {
+            ans=1+solve(i+1,j+1,text1,text2,dp);
+        }
+        else
+        {
+            ans=max(solve(i+1,j,text1,text2,dp),solve(i,j+1,text1,text2,dp));
+        }
+        return dp[i][j]=ans;
     }
     int longestCommonSubsequence(string text1, string text2) {
-        
-        return solve(text1,text2);
+        vector<vector<int>>dp(text1.size(),vector<int>(text2.size(),-1));
+        return solve(0,0,text1,text2,dp);
         
     }
 };
