@@ -1,40 +1,35 @@
 class Solution {
 public:
-    void dfsmark(vector<vector<char>>& grid,int r,int c,int row,int col)
+    void dfs(int i, int j, vector<vector<char>>& grid)
     {
-        if(r<0 || r>=row || c<0 || c>=col || grid[r][c] !='1')
-        {
+        int m=grid.size();
+        int n=grid[0].size();
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j] != '1')
             return;
+        grid[i][j]='2';
+        vector<int>row={i-1,i+1,i,i};
+        vector<int>col={j,j,j-1,j+1};
+        for(int index=0;index<4;index++)
+        {
+            dfs(row[index],col[index],grid);
         }
-        grid[r][c]='0';
-
-        //up
-        dfsmark(grid,r-1,c,row,col);
-        //down
-        dfsmark(grid,r+1,c,row,col);
-        //left
-        dfsmark(grid,r,c-1,row,col);
-        //right
-        dfsmark(grid,r,c+1,row,col);
     }
     int numIslands(vector<vector<char>>& grid) {
-        if (grid.empty() || grid[0].empty()) 
-            return 0;
         int row=grid.size();
         int col=grid[0].size();
-        int count=0;
-        for(int r=0;r<row;r++)
+        int ans=0;
+        for(int i=0;i<row;i++)
         {
-            for(int c=0;c<col;c++)
+            for(int j=0;j<col;j++)
             {
-                if(grid[r][c]=='1')
+                if(grid[i][j]=='1')
                 {
-                    count++;
-                    dfsmark(grid,r,c,row,col);
+                    dfs(i,j,grid);
+                    ans++;
                 }
             }
         }
-        return count;
+        return ans;
         
     }
 };
